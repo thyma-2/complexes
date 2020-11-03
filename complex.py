@@ -1,8 +1,8 @@
+import math
 #utilisation
 #argument x la partie réel
 #argument y la partie imaginaire
-# + - * / += -= *= /= == != implémentés
-# ** **= pas encore testés
+# + - * / += -= *= /= == != ** **= implémentés
  
 class complex:
     def __init__(self, x, y):
@@ -71,59 +71,17 @@ class complex:
         return ret
     
      
-    def __ipow__(self, other):
-        save = self
+    def __ipow__(self, puissance):
+        save = complex(self.x, self.y)
         for i in range(0, puissance - 1):
             self *= save
         return self
 
-def test_complexes():    
-    Ob1 = complex(1, 2)
-    Ob2 = complex(2, 3)
-    Ob3 = complex(-4, 5)
-    
-    print ("test addition 1")
-    assert complex(-2, 8) == Ob2 + Ob3
-    print("ok")
-    print ("test addition 2")
-    Ob2 += Ob1
-    assert complex(3, 5) == Ob2
-    print("ok")
-    
-    print ("test soustraction 1")
-    assert Ob2 - Ob3 == complex(7, 0)
-    print("ok")
-    print ("test soustraction 2")
-    Ob2 -= Ob1
-    assert Ob2 == complex(2, 3)
-    print("ok")
-    
-    print ("test multiplication 1")
-    assert Ob2 * Ob1 == complex(-4, 7)
-    print("ok")
-    Ob2 *= Ob3
-    print ("test multiplication 2")
-    assert Ob2 == complex(-23, -2)
-    print("ok")
-    
-    print ("test division 1")
-    Ob2 /= Ob3
-    assert Ob2 == complex(2, 3)
-    print("ok")
-    print("test division 2")
-    assert Ob3 / Ob1 == complex(1.2, 2.6)
-    print ("ok")
-    
-    
-    print ("test non egualitee 1")
-    assert Ob2 != Ob1
-    print ("ok")
-    print ("test non egualitee 2")
-    assert Ob2 != Ob3
-    print ("ok")
-    print ("test non egualitee 3")
-    assert Ob1 != Ob3
-    print ("ok")
+    def module(self):
+        return (self.x * self.x + self.y * self.y) ** 0.5
 
-
-test_complexes()
+    def arg(self, deg : bool = False):
+        mod = self.module()
+        if deg == False:
+            return math.acos(self.x / mod)
+        return math.acos(self.x / mod) * 57.29577951
